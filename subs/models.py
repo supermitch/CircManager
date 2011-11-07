@@ -15,29 +15,29 @@ class Customer(models.Model):
     bill_add_1 = models.CharField(max_length=200)
     bill_add_2 = models.CharField(max_length=200, blank=True)
     bill_city = models.CharField(max_length=200)
-    bill_country = models.CharField(max_length=200)
-    bill_postal = models.CharField(max_length=6)
     bill_province = models.CharField(max_length=200)
+    bill_postal = models.CharField(max_length=6)
+    bill_country = models.CharField(max_length=200)
     
     # Shipping information:
     ship_as_bill = models.BooleanField(verbose_name="Ship to Billing?")  #If true ignore shipping
     ship_add_1 = models.CharField(max_length=200, blank=True)
     ship_add_2 = models.CharField(max_length=200, blank=True)
     ship_city = models.CharField(max_length=200, blank=True)
-    ship_country = models.CharField(max_length=200, blank=True)
+    ship_province = models.CharField(max_length=200, blank=True, null=True)
     ship_postal = models.CharField(max_length=6, blank=True)
-    ship_province = models.CharField(max_length=200, blank=True)
+    ship_country = models.CharField(max_length=200, blank=True)
         
     def __unicode__(self):
-        return self.f_name
+        return '%s %s' % (self.first_name, self.last_name)
 
-class Substription(models.Model):
+class Subscription(models.Model):
 
     TERM_UNIT_CHOICES = (
-        ('Day',   'Day'),
-        ('Week',   'Week'),
-        ('Month',   'Month'),
-        ('Year',    'Year'),
+        ('Days',   'Days'),
+        ('Weeks',   'Weeks'),
+        ('Months',   'Months'),
+        ('Years',    'Years'),
     )
     payee_key = models.ForeignKey(Customer, verbose_name="Payee", related_name='subs_payee')
     # reader_key can be same (or not) as payee_key:
@@ -46,8 +46,8 @@ class Substription(models.Model):
     # Need to define Promos and Products Models, but I think these should reside in a Products App
     #promo_key = models.ForeignKey('Promo', verbose_name="Promo", related_name='subs_promo')
     #product_key = models.ForeignKey('Product', verbose_name="Promo", related_name='subs_product')
-    term_units = models.CharField("Term units", max_length=1, choices=TERM_UNIT_CHOICES)  # eg. "months"
     term_length = models.IntegerField()                         # eg. "2" (months)
+    term_units = models.CharField("Term units", max_length=6, choices=TERM_UNIT_CHOICES)  # eg. "months"
 
     def __unicode__(self):
-        return u'%s: %s %s' % (self.payee_id, self.term_length, self.term_units)
+        return u'%s: %s %s' % (self.payee_key, self.term_length, self.term_units)
