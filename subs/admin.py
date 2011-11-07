@@ -31,7 +31,13 @@ class CustomerAdmin(admin.ModelAdmin):
     #search_fields = ['question']
     #date_hierarchy = 'pub_date'
 
+class SubscriptionAdmin(admin.ModelAdmin):
+    pass
+
+class PaymentAdmin(admin.ModelAdmin):
+    pass
 
 admin.site.register(Customer, CustomerAdmin)
-admin.site.register(Subscription) # Todo: Check to see if there's a better way
+admin.site.register(Subscription, SubscriptionAdmin) # Todo: Check to see if there's a better way
+admin.site.register(Payment, PaymentAdmin) # Todo: Check to see if there's a better way
 
