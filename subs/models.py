@@ -18,7 +18,8 @@ class Customer(models.Model):
     bill_province = models.CharField(max_length=200)
     bill_postal = models.CharField(max_length=6)
     bill_country = models.CharField(max_length=200)
-    
+        # todo: Django-countries: http://code.google.com/p/django-countries/
+
     # Shipping information:
     ship_as_bill = models.BooleanField(verbose_name="Ship to Billing?")  #If true ignore shipping
     ship_add_1 = models.CharField(max_length=200, blank=True)
@@ -27,9 +28,15 @@ class Customer(models.Model):
     ship_province = models.CharField(max_length=200, blank=True)
     ship_postal = models.CharField(max_length=6, blank=True)
     ship_country = models.CharField(max_length=200, blank=True)
+        # todo: Django-countries: http://code.google.com/p/django-countries/
         
     def __unicode__(self):
         return u'%s, %s' % (self.last_name, self.first_name) # Note 'u' prefix makes unicode string
+
+class CustomerForm(ModelForm):
+    class Meta:
+        model = Customer
+    
 
 class Subscription(models.Model):
 
