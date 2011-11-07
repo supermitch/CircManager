@@ -50,7 +50,7 @@ class Subscription(models.Model):
     term_units = models.CharField("Term units", max_length=6, choices=TERM_UNIT_CHOICES)  # eg. "months"
 
     def __unicode__(self):
-        return u'%s: %s %s' % (self.payee_key, self.term_length, self.term_units)
+        return u'%s - %s %s' % (self.payee_key, self.term_length, self.term_units)
 
 class Payment(models.Model):
     PAYMENT_METHOD_CHOICES = (
@@ -67,4 +67,4 @@ class Payment(models.Model):
     amount = models.DecimalField('Total', max_digits=9, decimal_places=2)   # Max value is 9,999,999.99
 
     def __unicode__(self):
-        return u'%s: %s for %d' % (self.subscription, self.method, self.amount)
+        return u'%s - %s for %.2f' % (self.subscription, self.method, self.amount)
