@@ -1,4 +1,4 @@
-from subs.models import Customer, Subscription
+from subs.models import Customer, Subscription, Payment
 from django.contrib import admin
 
 class CustomerAdmin(admin.ModelAdmin):
