@@ -29,7 +29,7 @@ class Customer(models.Model):
     ship_country = models.CharField(max_length=200, blank=True)
         
     def __unicode__(self):
-        return '%s %s' % (self.first_name, self.last_name)
+        return u'%s, %s' % (self.last_name, self.first_name) # Note 'u' prefix makes unicode string
 
 class Subscription(models.Model):
 
@@ -52,3 +52,19 @@ class Subscription(models.Model):
     def __unicode__(self):
         return u'%s: %s %s' % (self.payee_key, self.term_length, self.term_units)
 
+class Payment(models.Model):
+    PAYMENT_METHOD_CHOICES = (
+        ('Credit', 'Credit card'),
+        ('Cheque', 'Cheque'),
+        ('Cash', 'Cash'),
+        ('Gift', 'Gift card'),
+        ('Paypal', 'Paypal'),
+        ('Interac', 'Interac'),
+    )
+
+    subscription = models.ForeignKey(Subscription)
+    method = models.CharField('Payment method', max_length=7, choices=PAYMENT_METHOD_CHOICES)
+    amount = models.DecimalField('Total', max_digits=9, decimal_places=2)   # Max value is 9,999,999.99
+
+    def __unicode__(self):
+        return u'%s: %s for %d' % (self.subscription, self.method, self.amount)
