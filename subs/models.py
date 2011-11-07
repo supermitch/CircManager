@@ -24,7 +24,7 @@ class Customer(models.Model):
     ship_add_1 = models.CharField(max_length=200, blank=True)
     ship_add_2 = models.CharField(max_length=200, blank=True)
     ship_city = models.CharField(max_length=200, blank=True)
-    ship_province = models.CharField(max_length=200, blank=True, null=True)
+    ship_province = models.CharField(max_length=200, blank=True)
     ship_postal = models.CharField(max_length=6, blank=True)
     ship_country = models.CharField(max_length=200, blank=True)
         
@@ -44,10 +44,11 @@ class Subscription(models.Model):
     reader_key = models.ForeignKey(Customer, verbose_name="Reader", related_name='subs_reader')
 
     # Need to define Promos and Products Models, but I think these should reside in a Products App
-    #promo_key = models.ForeignKey('Promo', verbose_name="Promo", related_name='subs_promo')
-    #product_key = models.ForeignKey('Product', verbose_name="Promo", related_name='subs_product')
+    #promo_key = models.ForeignKey('products.Promo', verbose_name="Promo", related_name='subs_promo')
+    #product_key = models.ForeignKey('products.Product', verbose_name="Product", related_name='subs_product')
     term_length = models.IntegerField()                         # eg. "2" (months)
     term_units = models.CharField("Term units", max_length=6, choices=TERM_UNIT_CHOICES)  # eg. "months"
 
     def __unicode__(self):
         return u'%s: %s %s' % (self.payee_key, self.term_length, self.term_units)
+
