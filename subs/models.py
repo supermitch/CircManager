@@ -67,4 +67,4 @@ class Payment(models.Model):
     amount = models.DecimalField('Total', max_digits=9, decimal_places=2)   # Max value is 9,999,999.99
 
     def __unicode__(self):
-        return u'%s - %s for %.2f' % (self.subscription, self.method, self.amount)
+        return u'%s - %s for $%.2f' % (self.subscription, self.method, self.amount)
