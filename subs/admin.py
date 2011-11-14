@@ -9,7 +9,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
     fieldsets = (   # Defines presentation of data in groups during Customer record editing
         ('Personal information', {
-            'fields': (('first_name', 'last_name', 'other_name'), 'email', 'phone', 'birthday')
+            'fields': (('first_name', 'last_name', 'other_name'), 'company','email', 'phone', 'birthday')
         }),
         
         ('Billing information', {

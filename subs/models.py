@@ -4,10 +4,20 @@ from django.forms import ModelForm
 # Create your models here.
 class Customer(models.Model):
 
+    #GREETING_CHOICES = (   # add this later
+    #    ('Mr',   'Mr'),
+    #    ('Mrs',   'Mrs'),
+    #    ('Ms',   'Ms'),
+    #    ('Dr',    'Dr'),
+    #    ('Prof',    'Prof'),
+    #)
+
     # Customer personal details
+    # greeting = models.Charfield('Greeting', max_length=10, choices=GREETING_CHOICES) $ add this later.
     first_name = models.CharField('First Name', max_length=50)
     last_name = models.CharField('Last Name', max_length=50)
     other_name = models.CharField('Other Names', max_length=100,blank=True)
+    company = models.CharField('Company', max_length=100, blank=True)
     birthday = models.DateField('Birthday',blank=True)
     phone = models.IntegerField(blank=True, null=True)
     email = models.EmailField(blank=True)
