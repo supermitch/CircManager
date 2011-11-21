@@ -1,0 +1,19 @@
+<html>
+
+<head>
+<title>Uploader</title>
+</head>
+
+<body>
+
+<p>Super struggle <em>Django!</em> file uploader, which is nearly working?</p>
+
+<form enctype="multipart/form-data" method="post" action="/upload_file/">
+    {% csrf_token %}
+    <b> {{ form.file.label_tag }}</b>  {{ form.file}}
+    <input type="submit" value="Submit" />
+</form
+
+</body>
+
+</html>
