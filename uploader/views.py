@@ -8,19 +8,10 @@ from django.template import RequestContext
 from models import UploadFileForm # import our upload form model
 
 
-#def index(request):
-#    context = {}
-#    context.update(csrf(request))  
-#    return render_to_response('uploader/index.html', context)
-
 def success(request):
-    context = {}
-    context.update(csrf(request))  
-    return render_to_response('uploader/success.html', context)
+    return render_to_response('uploader/success.html')
 
 def upload_file(request):
-    context = {}                    # Not necessary?
-    context.update(csrf(request))   # Not necessary?
 
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
