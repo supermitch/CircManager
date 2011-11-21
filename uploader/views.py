@@ -1,8 +1,9 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.template import Context # useless?
+
+#from django.template import Context # useless?
 from django.http import HttpResponse
-from django.core.context_processors import csrf # security thing
+#from django.core.context_processors import csrf # security thing
 from django.template import RequestContext
 
 from models import UploadFileForm # import our upload form model
