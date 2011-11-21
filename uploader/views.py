@@ -1,9 +1,6 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
-
-#from django.template import Context # useless?
 from django.http import HttpResponse
-#from django.core.context_processors import csrf # security thing
 from django.template import RequestContext
 
 from models import UploadFileForm # import our upload form model
@@ -17,8 +14,9 @@ def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            handle_uploaded_file(request.FILES['file'])
-            return HttpResponseRedirect('../success')
+            name_list = handle_uploaded_file(request.FILES['file']) # return a response from this page
+            #return HttpResponseRedirect('../success')
+            return render_to_response('uploader/results.html', name_list, context_instance=RequestContext(request))
             
     else:
         form = UploadFileForm()
@@ -29,6 +27,9 @@ def handle_uploaded_file(f):
     for chunk in f.chunks():
         destination.write(chunk)
     destination.close()
+    return {'name_list': ['mitch', 'ross', 'test']} # holy shit this worked.
+    
+    
     
 
 
