@@ -17,4 +17,6 @@ urlpatterns = patterns('',
     url(r'^subscribe/', 'subs.views.index'),
     url(r'^upload/', 'uploader.views.upload_file', name='upload'),
     url(r'^success/', 'uploader.views.success', name='success'),
+   # would like to redirect to a "results/" url instead of to nothing...
+   # url(r'^results/', 'uploader.views.results', name='results'),
 )
