@@ -28,6 +28,7 @@ def upload_file(request):
 def handle_uploaded_file(f):
     import os.path      # Added so I could do away with absolute path to templates, see below
     import csv          # Let's read our CSV file the proper way using python 
+    import re
     
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     infile = os.path.join(SITE_ROOT, '../data/upload.txt')
@@ -54,6 +55,10 @@ def handle_uploaded_file(f):
 
         csvSample = csvFile.read(1024)     # Read a sample of the file for our csv sniffers
         csvFile.seek(0)                             # rewind the file
+
+        # what if we try to regex out the \n\r symbols?
+        csvSample = re.sub('[^\S\r\n]', ' ', csvSample, 0)
+        
 
         dialect = csv.Sniffer().sniff(csvSample)    # figure out the dialect, according to the sniffer    
 
