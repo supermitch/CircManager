@@ -30,7 +30,7 @@ def handle_uploaded_file(f):
 
     import os.path      # Added so I could do away with absolute path to templates, see below
     import csv          # Let's read our CSV file the proper way using python 
-    import re
+    # TODO import datetime     # need to make sure our date inputs are valid
 
     # See os.path import, above. Builds a relative file name for our saved file
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -54,15 +54,15 @@ def handle_uploaded_file(f):
 
         # File must be opened in binary mode for has_header(file) to succeed.
         if csv.Sniffer().has_header(csvSample):     # if we have headers in our file (according to the sniffer)
-            inReader.next()                         # skip a row. I think we can use dictReader for this, would be better?
+            inReader.next()                         # skip a row. TODO I think we can use dictReader for this, would be better?
 
         for row in inReader:
             c = Customer(
                 # Personal details
-                #greeting=row[0],   # don't have this in the model yet... todo
-                first_name=row[1], last_name=row[2], other_name=row[3]
-                , company=row[4], birthday="2011-12-12" # =row[5] Need valid date format.
-                , phone="6041234567", email=row[7]
+                greeting=row[0] # doesn't seem to work? TODO
+                , first_name=row[1], last_name=row[2], other_name=row[3]
+                , company=row[4], birthday='2011-12-04' # =row[5].strptime() TODO
+                , phone=row[6], email=row[7]
                 # Billing address:
                 , bill_add_1=row[8], bill_add_2=row[9], bill_city=row[10]
                 , bill_province=row[11], bill_postal=row[12], bill_country=row[13]
