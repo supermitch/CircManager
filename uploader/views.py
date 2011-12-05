@@ -17,60 +17,46 @@ def upload_file(request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             # name_list = handle_uploaded_file(request.FILES['file']) # return a response from this page
-            handle_uploaded_file(request.FILES['file'])
-            return HttpResponseRedirect('../success')
-            # return render_to_response('uploader/results.html', name_list, context_instance=RequestContext(request))
+            if handle_uploaded_file(request.FILES['file']):
+                return HttpResponseRedirect('../success')
+                # return render_to_response('uploader/results.html', name_list, context_instance=RequestContext(request))
             
     else:
         form = UploadFileForm()
     return render_to_response('uploader/index.html', {'form': form}, context_instance=RequestContext(request))
 
+
 def handle_uploaded_file(f):
+
     import os.path      # Added so I could do away with absolute path to templates, see below
     import csv          # Let's read our CSV file the proper way using python 
     import re
-    
+
+    # See os.path import, above. Builds a relative file name for our saved file
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     infile = os.path.join(SITE_ROOT, '../data/upload.txt')
 
-    # See os.path import, above:
+    
     destination = open(infile, 'wb+')
-    for chunk in f.chunks():
-        destination.write(chunk)
-    destination.close()
-    # return {'name_list': ['mitch', 'ross', 'test']} # holy shit this worked.
+    for chunk in f.chunks():                # This is how django (or python?) handles file uploads.
+        destination.write(chunk)            # We'll just write the chunks to a file, and re-open that file later, rather
+    destination.close()                     # than use the chunks as they arrive.
 
-    # Try to open the file, catch the exception if it fails?
-    # try:
-    # infile = open(infile, 'r')    # open the .csv file for reading
 
-    # except IOError as e:    # if file open failed for whatever reason
-
-#    for line in infile:     # for each line in the infile list
-#       fields = line.split(',')
-#        c = Customer(first_name=fields[1], last_name=fields[2], other_name=fields[3], company=fields[4], birthday="2001-02-12")
-#       c.save()
-
-    with open(infile, 'U') as csvFile:
+    with open(infile, "rb") as csvFile:
 
         csvSample = csvFile.read(1024)     # Read a sample of the file for our csv sniffers
-        csvFile.seek(0)                             # rewind the file
-
-        # what if we try to regex out the \n\r symbols?
-        csvSample = re.sub('[^\S\r\n]', ' ', csvSample, 0)
-        
+        csvFile.seek(0)                    # rewind the file
 
         dialect = csv.Sniffer().sniff(csvSample)    # figure out the dialect, according to the sniffer    
 
         inReader = csv.reader(csvFile, dialect)     # Read our .csv file
 
-        # This next line fails because of newline characters in the file.
-        # I cannot figure out how to handle them properly!
-        # if csv.Sniffer().has_header(csvSample.strip()):     # if we have headers in our file (according to the sniffer)
-        inReader.next()                         # skip a row. I think we can use dictReader for this, would be better?
+        # File must be opened in binary mode for has_header(file) to succeed.
+        if csv.Sniffer().has_header(csvSample):     # if we have headers in our file (according to the sniffer)
+            inReader.next()                         # skip a row. I think we can use dictReader for this, would be better?
 
         for row in inReader:
-            #c = Customer(first_name=fields[1], last_name=fields[2], other_name=fields[3], company=fields[4], birthday="2001-02-12")
             c = Customer(
                 # Personal details
                 #greeting=row[0],   # don't have this in the model yet... todo
@@ -87,8 +73,7 @@ def handle_uploaded_file(f):
                 )
             c.save()
 
-    # infile.close()  # Close the csv input file # Automagically close a file with 'with'
-
-    
+    # return {'name_list': ['mitch', 'ross', 'test']} # holy shit this worked.
+    return True
 
 
