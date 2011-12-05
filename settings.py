@@ -45,7 +45,9 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+import os.path   # Added so I could do away with absolute path to templates, see below
+SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+MEDIA_ROOT = SITE_ROOT + '/data'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -102,7 +104,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'CircManager.urls'
 
-import os.path   # Added so I could do away with absolute path to templates, see below
+# import os.path   # Added so I could do away with absolute path to templates, see below
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 
 TEMPLATE_DIRS = (
