@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'index',    # Home page app
     'subs',
     'uploader', # Nov. 20 added uploader
     'products', # RM - Nov. 28 added 

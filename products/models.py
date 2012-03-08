@@ -4,7 +4,9 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     dateCreated = models.DateField('Created', blank=True, null=True)
     term = models.IntegerField(help_text="Enter number of issues")
-    cost = models.IntegerField()
+
+    # max cost is $999,999,999.00
+    cost = models.DecimalField(max_digits=8, decimal_places=2)
     code = models.CharField("Product code", max_length=200)
     description = models.TextField()
 
