@@ -57,22 +57,41 @@ class CustomerForm(ModelForm):
     
 
 class Subscription(models.Model):
+    """
+    Subscription defines the purchase of the product, which has
+    an associated duration, for products with more than 1 term.
+    For example, a 12 issue magazine subscription.
+    """
 
     TERM_UNIT_CHOICES = (
         ('Days',    'Days'),
         ('Weeks',   'Weeks'),
         ('Months',  'Months'),
         ('Years',   'Years'),
+        ('Issues',  'Issues'),
     )
-    payee_key = models.ForeignKey(Customer, verbose_name="Payee", related_name='subs_payee')
+    payee_key = models.ForeignKey('subs.Customer',
+                                  verbose_name='Payee',
+                                  related_name='subs_payee')
     # reader_key can be same (or not) as payee_key:
-    reader_key = models.ForeignKey(Customer, verbose_name="Reader", related_name='subs_reader')
+    reader_key = models.ForeignKey('subs.Customer',
+                                   verbose_name='Reader',
+                                   related_name='subs_reader')
 
     # Need to define Promos and Products Models, but I think these should reside in a Products App
-    #promo_key = models.ForeignKey('products.Promo', verbose_name="Promo", related_name='subs_promo')
-    #product_key = models.ForeignKey('products.Product', verbose_name="Product", related_name='subs_product')
-    term_length = models.IntegerField()                         # eg. "2" (months)
-    term_units = models.CharField("Term units", max_length=6, choices=TERM_UNIT_CHOICES)  # eg. "months"
+    promo_key = models.ForeignKey('products.Promo',
+                                  verbose_name='Promo',
+                                  related_name='subs_promo',
+                                  blank=True, null=True)
+    
+    product_key = models.ForeignKey('products.Product',
+                                    verbose_name='Product',
+                                    related_name='subs_product')
+
+    term_length = models.IntegerField() # eg. "2" (months)
+    term_units = models.CharField('Term units',
+                                  max_length=6,
+                                  choices=TERM_UNIT_CHOICES) # eg. "months"
 
     def __unicode__(self):
         return u'%s - %s %s' % (self.payee_key, self.term_length, self.term_units)

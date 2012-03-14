@@ -37,7 +37,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
 class PaymentAdmin(admin.ModelAdmin):
     pass
 
+# TODO: Check to see if there's a better way
 admin.site.register(Customer, CustomerAdmin)
-admin.site.register(Subscription, SubscriptionAdmin) # Todo: Check to see if there's a better way
-admin.site.register(Payment, PaymentAdmin) # Todo: Check to see if there's a better way
-
+admin.site.register(Subscription, SubscriptionAdmin) 
+admin.site.register(Payment, PaymentAdmin)
