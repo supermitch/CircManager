@@ -3,6 +3,9 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.template import RequestContext
 
+# import login_required shortcut
+from django.contrib.auth.decorators import login_required
+
 from models import UploadFileForm # import our upload form model
 
 from subs.models import Customer
@@ -11,6 +14,7 @@ from subs.models import Customer
 def success(request):
     return render_to_response('uploader/success.html')
 
+@login_required
 def upload_file(request):
 
     if request.method == 'POST':

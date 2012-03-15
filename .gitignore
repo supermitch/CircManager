@@ -1,6 +1,9 @@
-# Files to ignore
+# Ignore python compiled
 *.pyc
+
+# Ignore Vim swap
 *.swp
 
+# Ignore db files
 *.db
 *.sqlite

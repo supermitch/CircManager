@@ -1,5 +1,8 @@
 from django.conf.urls.defaults import patterns, include, url
 
+# Enable built-in login/logout pages
+from django.contrib.auth.views import login, logout
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -17,7 +20,10 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-
+    # Authentication urls
+    url(r'^accounts/login/$', login),
+    url(r'^accounts/logout/$', logout),
+    
     # Custom views
     url(r'^subscribe/', 'subs.views.index'),
     url(r'^upload/', 'uploader.views.upload_file', name='upload'),
