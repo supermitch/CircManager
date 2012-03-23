@@ -73,12 +73,9 @@ class Subscription(models.Model):
     payee_key = models.ForeignKey('subs.Customer',
                                   verbose_name='Payee',
                                   related_name='subs_payee')
-    # reader_key can be same (or not) as payee_key:
-    reader_key = models.ForeignKey('subs.Customer',
-                                   verbose_name='Reader',
-                                   related_name='subs_reader')
 
-    # Need to define Promos and Products Models, but I think these should reside in a Products App
+    # Need to define Promos and Products Models,
+    # but reside in a Products App
     promo_key = models.ForeignKey('products.Promo',
                                   verbose_name='Promo',
                                   related_name='subs_promo',
