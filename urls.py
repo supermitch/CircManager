@@ -25,9 +25,12 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', logout),
     
     # Custom views
-    url(r'^subscribe/', 'subs.views.index'),
-    url(r'^upload/', 'uploader.views.upload_file', name='upload'),
-    url(r'^success/', 'uploader.views.success', name='success'),
+    url(r'^subs/subscribe/', 'subs.views.index'),
+    url(r'^subs/ship/', 'subs.views.ship_product'),
+
+    url(r'^upload/upload/', 'uploader.views.upload_file', name='upload'),
+    url(r'^upload/success/', 'uploader.views.success', name='success'),
+
 
     #ToDo urls
    # would like to redirect to a "results/" url instead of to nothing...

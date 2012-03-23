@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>CircManager: Ship Product</title>
+</head>
+<body>
+    <h1>Ship Product:</h1>
+
+    <p>Use this form to update your subscriptions after shipping
+    a new issue or product.</p>
+
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
