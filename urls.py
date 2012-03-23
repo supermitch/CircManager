@@ -25,8 +25,9 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', logout),
     
     # Custom views
-    url(r'^subs/subscribe/', 'subs.views.index'),
-    url(r'^subs/ship/', 'subs.views.ship_product'),
+    url(r'^subs/subscribe/', 'subs.views.index'),   
+    url(r'^subs/ship/', 'subs.views.ship_product', name='ship'),
+
 
     url(r'^upload/upload/', 'uploader.views.upload_file', name='upload'),
     url(r'^upload/success/', 'uploader.views.success', name='success'),
