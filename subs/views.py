@@ -17,13 +17,13 @@ def ship_product(request):
         form = SendIssueForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-                       
+
             q = Subscription.objects.filter(
                 product_key__exact=cd['product'])
             #q = q.filter(status__iexact="Active") # TODO: implement
             q = q.filter(term_length__gt=0)
 
-            # TODO: Verify our cd['no_shipped'] > 0
+            
             # TODO: Verify each subscription has enough issues
             #       remaining to actually decrement.
             # Decrement our terms remaining:
