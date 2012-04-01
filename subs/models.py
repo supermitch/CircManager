@@ -4,18 +4,19 @@ from django.forms import ModelForm
 # Create your models here.
 class Customer(models.Model):
 
-    GREETING_CHOICES = (
-        ('Mr',      'Mr.'),
-        ('Mrs',     'Mrs.'),
-        ('Ms',      'Ms.'),
-        ('Dr',      'Dr.'),
-        ('Prof',    'Prof.'),
+    GREETINGS = (
+        ('Mr.',     'Mr.'),
+        ('Mrs.',    'Mrs.'),
+        ('Ms.',     'Ms.'),
+        ('Dr.',     'Dr.'),
+        ('Prof.',   'Prof.'),
+        ('Sir',     'Sir'),        
     )
 
     # Customer personal details
     greeting = models.CharField('Greeting',
-                                max_length=10,
-                                choices=GREETING_CHOICES,
+                                max_length=5,
+                                choices=GREETINGS,
                                 blank=True)
 
     first_name = models.CharField('First Name', max_length=50)
@@ -81,11 +82,11 @@ class Subscription(models.Model):
                                     verbose_name='Product',
                                     related_name='subs_product')
 
-    term_length = models.IntegerField() # eg. "2" (months)
+    term_length = models.IntegerField() # eg. "2" (issues)
 
-    TERM_UNIT_CHOICES = (
+    TERM_UNITS = (
         ('Days',    'Days'),
-        ('Weeks',   'Weeks'),
+        ('Weeks',   'Weeks')
         ('Months',  'Months'),
         ('Years',   'Years'),
         ('Issues',  'Issues'),
@@ -93,18 +94,23 @@ class Subscription(models.Model):
 
     term_units = models.CharField('Term units',
                                   max_length=6,
-                                  choices=TERM_UNIT_CHOICES) # e.g. "months"
+                                  choices=TERM_UNITS,
+                                  default='Issues')
 
-    STATUS_CHOICES = (
-        ('inactive',    'Inactive'),
-        ('active',      'Active'),
-        ('closed',      'Closed'),
-        ('hold',        'Hold'),
+    STATUSES = (
+        ('Inactive',    'Inactive'),
+        ('Active',      'Active'),
+        ('Closed',      'Closed'),
+        ('Hold',        'Hold'),
     )
 
     status = models.CharField(max_length=8,
-                              choices=STATUS_CHOICES,
-                              default='active')
+                              choices=STATUSES,
+                              default='Active')
+
+    gift_bool = models.BooleanField('Gift?', default=False)
+    gift_name = models.CharField('Giftee name', max_length=100,blank=True)
+    gift_msg = models.CharField('Git message', max_length=250,blank=True)
  
     def __unicode__(self):
         return u'%s - %s: %s %s' % (self.payee_key,
@@ -114,7 +120,8 @@ class Subscription(models.Model):
 
 
 class Payment(models.Model):
-    PAYMENT_METHOD_CHOICES = (
+
+    PAYMENT_METHODS = (
         ('Credit',  'Credit card'),
         ('Cheque',  'Cheque'),
         ('Cash',    'Cash'),
@@ -126,7 +133,8 @@ class Payment(models.Model):
     subscription = models.ForeignKey(Subscription)
     method = models.CharField('Payment method',
                               max_length=7,
-                              choices=PAYMENT_METHOD_CHOICES)
+                              choices=PAYMENT_METHODS)
+
     amount = models.DecimalField('Total',
                                  max_digits=9,
                                  decimal_places=2)   # Max 9,999,999.99
