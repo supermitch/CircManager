@@ -14,7 +14,10 @@ class Customer(models.Model):
 
     # Customer personal details
     greeting = models.CharField('Greeting',
-            max_length=10, choices=GREETING_CHOICES, blank=True)
+                                max_length=10,
+                                choices=GREETING_CHOICES,
+                                blank=True)
+
     first_name = models.CharField('First Name', max_length=50)
     last_name = models.CharField('Last Name', max_length=50)
     other_name = models.CharField('Other Names', max_length=100,blank=True)
@@ -65,19 +68,10 @@ class Subscription(models.Model):
     For example, a 12 issue magazine subscription.
     """
 
-    TERM_UNIT_CHOICES = (
-        ('Days',    'Days'),
-        ('Weeks',   'Weeks'),
-        ('Months',  'Months'),
-        ('Years',   'Years'),
-        ('Issues',  'Issues'),
-    )
     payee_key = models.ForeignKey('subs.Customer',
                                   verbose_name='Payee',
                                   related_name='subs_payee')
 
-    # Need to define Promos and Products Models,
-    # but reside in a Products App
     promo_key = models.ForeignKey('products.Promo',
                                   verbose_name='Promo',
                                   related_name='subs_promo',
@@ -88,15 +82,36 @@ class Subscription(models.Model):
                                     related_name='subs_product')
 
     term_length = models.IntegerField() # eg. "2" (months)
+
+    TERM_UNIT_CHOICES = (
+        ('Days',    'Days'),
+        ('Weeks',   'Weeks'),
+        ('Months',  'Months'),
+        ('Years',   'Years'),
+        ('Issues',  'Issues'),
+    )
+
     term_units = models.CharField('Term units',
                                   max_length=6,
-                                  choices=TERM_UNIT_CHOICES) # eg. "months"
+                                  choices=TERM_UNIT_CHOICES) # e.g. "months"
 
+    STATUS_CHOICES = (
+        ('inactive',    'Inactive'),
+        ('active',      'Active'),
+        ('closed',      'Closed'),
+        ('hold',        'Hold'),
+    )
+
+    status = models.CharField(max_length=8,
+                              choices=STATUS_CHOICES,
+                              default='active')
+ 
     def __unicode__(self):
         return u'%s - %s: %s %s' % (self.payee_key,
                                     self.product_key,
                                     self.term_length,
                                     self.term_units)
+
 
 class Payment(models.Model):
     PAYMENT_METHOD_CHOICES = (
