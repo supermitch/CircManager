@@ -9,11 +9,6 @@ class SendIssueForm(forms.Form):
     product = forms.CharField(initial='Choose a product to ship',
                               max_length=20,
                               widget=forms.Select(choices=prod_choices))
-    
-    no_shipped = forms.IntegerField(initial='1',
-                                 label='# shipped',
-                                 min_value=1,
-                                 max_value=100)
 
     notes = forms.CharField(help_text='Add a note for your records.',
                             widget=forms.Textarea,
