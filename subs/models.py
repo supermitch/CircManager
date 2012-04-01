@@ -86,7 +86,7 @@ class Subscription(models.Model):
 
     TERM_UNITS = (
         ('Days',    'Days'),
-        ('Weeks',   'Weeks')
+        ('Weeks',   'Weeks'),
         ('Months',  'Months'),
         ('Years',   'Years'),
         ('Issues',  'Issues'),

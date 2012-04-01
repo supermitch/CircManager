@@ -1,10 +1,21 @@
-<html>
-<head>
-    <title>CircManager: Shipping results</title>
-</head>
-<body>
+{% extends "admin/base_site.html" %}
 
-    <p>The following customers were updated:</p>
+{% block title %}CircManager: Shipped Issue{% endblock %}
+
+{% block content %}
+
+<div id="content-main">
+
+    <p>Success! Updated {{ rec_count }}
+    record{{ rec_count|pluralize }}.</p>
+
+    <p><a href="{% url admin:index %}">Back to admin</a>
+    | <a href="{% url subs.views.ship_product %}">Ship other products</a>
+        
+    <p>The following customer{{ rec_count|pluralize }}
+    {{ rec_count|pluralize:"was,were" }} updated:</p>
+
+    <p>Records after update:</p>
 
 <ul>
 {% for val in q %}
@@ -12,8 +23,17 @@
 {% endfor %}
 </ul>
 
-</body>
+<p>Returns records prior to update:</p>
 
-</html>
+<ul>
+{% for val in u %}
+    <li>{{ val }}</li>
+{% endfor %}
+</ul>
+
+</div>
+
+{% endblock %}
+
 
 

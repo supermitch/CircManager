@@ -1,9 +1,10 @@
-<html>
-<head>
-    <title>CircManager: Ship Product</title>
-</head>
-<body>
-    <h1>Ship Product:</h1>
+{% extends "admin/base_site.html" %}
+
+{% block title %}CircManager: Ship Issue{% endblock %}
+
+{% block content %}
+
+<div id="content-main">
 
     <p>Use this form to update your subscriptions after shipping
     a new issue or product.</p>
@@ -21,5 +22,5 @@
         </table>
         <input type="submit" value="Submit">
     </form>
-</body>
-</html>
+
+{% endblock %}
