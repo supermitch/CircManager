@@ -61,6 +61,7 @@ def handle_uploaded_file(f):
             inReader.next()                         # skip a row. TODO I think we can use dictReader for this, would be better?
 
         for row in inReader:
+            
             c = Customer(
                 # Personal details
                 greeting=row[0] # doesn't seem to work? TODO
@@ -76,6 +77,21 @@ def handle_uploaded_file(f):
                 , ship_province=row[18], ship_postal=row[19], ship_country=row[20]
                 )
             c.save()
+
+            # look for a product column
+            # if there's none, check to see if we have a product defined in our DB
+            # if not, define default product "MAGAZINE"
+
+            # either use default product, or use column product value
+
+            # 
+            #term_length = calculate_term(date)
+            #p = Product(pk=1)
+            #if not p:
+            #    p = Product(name='', term_length='', cost='')
+            #    p.save()
+            #s = Subscription(payee_key=c, product_key=p, term_length)
+
 
     # return {'name_list': ['mitch', 'ross', 'test']} # holy shit this worked.
     return True
