@@ -45,7 +45,6 @@ def handle_uploaded_file(f):
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     infile = os.path.join(SITE_ROOT, '../data/upload.txt')
 
-    
     destination = open(infile, 'wb+')
     # This is how django (or python?) handles file uploads.
     for chunk in f.chunks():
@@ -64,9 +63,38 @@ def handle_uploaded_file(f):
         if csv.Sniffer().has_header(csvSample):
             inReader.next()
             #TODO I think we can use dictReader for this, would be better?
+ 
+        import random   # for username generation
+        from django.contrib.auth.models import User
+        import re   # for username generation
 
         for row in inReader:
-            
+
+            user_name = re.sub(r'\W+', '', row[1].lower())
+
+            if len(user_name) < 5:  # First attempt, add last name
+                user_name += re.sub(r'\W+', '', row[2].lower())
+            if len(user_name) < 5:  # Second attempt, add 3 digit rand int
+                user_name += str(random.randrange(100,999))
+
+            user_name = user_name[:30]  # limit length per Django
+
+            # if user exists, add rand digits. If too long, replace 2 chars.
+            while User.objects.filter(username__iexact=user_name).count() > 0:
+                user_name = user_name[:28] + str(random.randrange(99))
+
+            pass_word = User.objects.make_random_password(10)
+
+            user = User.objects.create_user(user_name,
+                                            email=row[7],
+                                            password=pass_word)
+
+            user.first_name=row[1]
+            user.last_name=row[2]
+            user.is_staff=False
+            user.is_active=False
+            user.save()
+
             c = Customer(
                 # Personal details
                 greeting=row[0] # doesn't seem to work? TODO
