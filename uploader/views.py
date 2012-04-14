@@ -20,19 +20,24 @@ def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            # name_list = handle_uploaded_file(request.FILES['file']) # return a response from this page
+            # return a response from this page
+            # name_list = handle_uploaded_file(request.FILES['file'])
             if handle_uploaded_file(request.FILES['file']):
                 return HttpResponseRedirect('../success')
-                # return render_to_response('uploader/results.html', name_list, context_instance=RequestContext(request))
+                # return render_to_response('uploader/results.html',
+                #   name_list, 
+                #   context_instance=RequestContext(request))
             
     else:
         form = UploadFileForm()
-    return render_to_response('uploader/index.html', {'form': form}, context_instance=RequestContext(request))
+    return render_to_response('uploader/index.html',
+                              {'form': form},
+                              context_instance=RequestContext(request))
 
 
 def handle_uploaded_file(f):
 
-    import os.path      # Added so I could do away with absolute path to templates, see below
+    import os.path      # Added to do away with abs path to templates, see below
     import csv          # Let's read our CSV file the proper way using python 
     # TODO import datetime     # need to make sure our date inputs are valid
 
@@ -42,23 +47,23 @@ def handle_uploaded_file(f):
 
     
     destination = open(infile, 'wb+')
-    for chunk in f.chunks():                # This is how django (or python?) handles file uploads.
-        destination.write(chunk)            # We'll just write the chunks to a file, and re-open that file later, rather
-    destination.close()                     # than use the chunks as they arrive.
-
+    # This is how django (or python?) handles file uploads.
+    for chunk in f.chunks():
+        # We'll just write the chunks to a file, and re-open that file later
+        destination.write(chunk)
+        destination.close()
 
     with open(infile, "rb") as csvFile:
 
-        csvSample = csvFile.read(1024)     # Read a sample of the file for our csv sniffers
+        csvSample = csvFile.read(1024)     # Read sample of file for csv sniffers
         csvFile.seek(0)                    # rewind the file
-
-        dialect = csv.Sniffer().sniff(csvSample)    # figure out the dialect, according to the sniffer    
-
+        dialect = csv.Sniffer().sniff(csvSample)
         inReader = csv.reader(csvFile, dialect)     # Read our .csv file
 
         # File must be opened in binary mode for has_header(file) to succeed.
-        if csv.Sniffer().has_header(csvSample):     # if we have headers in our file (according to the sniffer)
-            inReader.next()                         # skip a row. TODO I think we can use dictReader for this, would be better?
+        if csv.Sniffer().has_header(csvSample):
+            inReader.next()
+            #TODO I think we can use dictReader for this, would be better?
 
         for row in inReader:
             
