@@ -67,6 +67,7 @@ def handle_uploaded_file(f):
         import random   # for username generation
         from django.contrib.auth.models import User
         import re   # for username generation
+        import datetime import datetime as dt
 
         for row in inReader:
 
@@ -96,14 +97,19 @@ def handle_uploaded_file(f):
             user.save()
 
             c = Customer(
+                user = user
+                
                 # Personal details
-                greeting=row[0] # doesn't seem to work? TODO
-                , first_name=row[1], last_name=row[2], other_name=row[3]
-                , company=row[4], birthday='2011-12-04' # =row[5].strptime() TODO
-                , phone=row[6], email=row[7]
+                , greeting=row[0] # doesn't seem to work? TODO
+                , other_name=row[3]
+                , company=row[4]
+                , birthday=dt.strptime(row[5], '%Y-%m-%d')
+                , phone=row[6]
+
                 # Billing address:
                 , bill_add_1=row[8], bill_add_2=row[9], bill_city=row[10]
                 , bill_province=row[11], bill_postal=row[12], bill_country=row[13]
+                
                 # Shipping address:
                 , ship_as_bill=row[14]
                 , ship_add_1=row[15], ship_add_2=row[16], ship_city=row[17]
