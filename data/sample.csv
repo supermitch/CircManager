@@ -1,8 +1,8 @@
 "GREETING","FIRST NAME","LAST NAME","OTHER NAME","COMPANY","BIRTHDAY","PHONE","EMAIL","BILL_ADD_1","BILL_ADD_2","BILL_CITY","BILL_PROV","BILL_POSTAL","BILL_COUNTRY","SHIP_AS_BILL","SHIP_ADD_1","SHIP_ADD_2","SHIP_CITY","SHIP_PROV","SHIP_POSTAL","SHIP_COUNTRY","TYPE","DATE STARTED","CONTRIBUTOR","ADVERTISER","NO SWAP","SOURCE","CHANGE DATE RECORD","ID "
-"Ms.","Heidi","Greco",,"Cormorant",2011-01-25,"604-538-8347","heidigreco@hotmail.com","15823 Tulip  Drive"," ","South Surrey","BC","V4A 1Y2","CAN","TRUE",,,,,,,"E",,"TRUE","TRUE",,"MAG","11/08/10",13091
-"Dr.","David","Freeman",," ",," "," ","Sir Wilfred Grenfell","Professor","Corner Brook","NL","A2H 6P9","CAN","TRUE",,,,,,,"F","08/15/97","FALSE","FALSE",," ",,13160
-"Mrs.","Susan","Shank",," ",," "," ","208 - 1234 Pendrell St."," ","Vancouver","BC","V6E 1L6","CAN","TRUE",,,,,,,"F","05/01/97","FALSE","FALSE",," ",,12816
-"Mr.","L.A.","Dunn",," ",2010-06-07,"519 484-2033"," ","206 Ellis Ave."," ","Mount Pleasant","ON","N0E 1K0","CAN","TRUE",,,,,,,"F","06/17/98","FALSE","FALSE",,"DM97","01/10/05",14185
+"Ms.","Heidi","Greco",,"Cormorant","2011-01-25","604-538-8347","heidigreco@hotmail.com","15823 Tulip  Drive"," ","South Surrey","BC","V4A 1Y2","CAN","TRUE",,,,,,,"E",,"TRUE","TRUE",,"MAG","11/08/10",13091
+"Dr.","David","Freeman",," ",,"11/12/11"," ","Sir Wilfred Grenfell","Professor","Corner Brook","NL","A2H 6P9","CAN","TRUE",,,,,,,"F","08/15/97","FALSE","FALSE",," ",,13160
+"Mrs.","Susan","Shank",," ",,"2012-31-31"," ","208 - 1234 Pendrell St."," ","Vancouver","BC","V6E 1L6","CAN","TRUE",,,,,,,"F","05/01/97","FALSE","FALSE",," ",,12816
+"Mr.","L.A.","Dunn",," ","2010-06-07","519 484-2033"," ","206 Ellis Ave."," ","Mount Pleasant","ON","N0E 1K0","CAN","TRUE",,,,,,,"F","06/17/98","FALSE","FALSE",,"DM97","01/10/05",14185
 "Prof.","Michael","Trussler",," ",,"306-585-4315","Michael.Trussler@uregina.ca","University of Regina"," ","Regina","SK","S4S 0A2","CAN","TRUE",,,,,,,"F","08/03/04",,,,"CONTEST","12/09/08",23738
 "Dr.","Jerry","Stamatelos",," ",,"514.735.5058","j_stamatelos@yahoo.ca","4810 Queen Mary Road","Suite 4","Montreal","QC","H3W 1W9","CAN","TRUE",,,,,,,"M","08/03/04",,,,"SLUSH",,23739
 ,"Matt","Peake",," ",,"613-884-7110","matt_peake@hotmail.com","310 Elmgrove Avenue, Unit B"," ","Ottawa","ON","K1Z 6V1","CAN","TRUE",,,,,,,"P","08/03/04",,,,"SLUSH","08/27/10",23740
@@ -28,7 +28,7 @@
 ,"Anne","Wen",," ",1981-01-01,"604-986-6859","fatfrog49@hotmail.com","1169 West 24th St"," ","North Vancouver","BC","V7P 2J1","CAN","TRUE",,,,,,,"P","08/05/04",,,,"EVENT",,23759
 ,"Freda","Tsen",," ",,"604-738-4429","freda738@hotmail.com","#207, 1216 West 11th Ave"," ","Vancouver","BC","V6H 1K3","CAN","TRUE",,,,,,,"P","08/05/04",,,,"EVENT",,23760
 ,"Ashely","Tan",," ",,"604-670-9613"," ","206-1528 East 5th Ave"," ","Vancouver","BC","V6E 1L7","CAN","TRUE",,,,,,,"P","08/05/04",,,,"EVENT",,23761
-,"Loretta","Seto",," ","1989-31-31","604-677-4199","loretta_seto@hotmail.com","2144A West 13th Ave"," ","Vancouver","BC","V6K 2S1","CAN","TRUE",,,,,,,"P","08/05/04",,,,"EVENT",,23762
+,"Loretta","Seto",," ","1989-10-31","604-677-4199","loretta_seto@hotmail.com","2144A West 13th Ave"," ","Vancouver","BC","V6K 2S1","CAN","TRUE",,,,,,,"P","08/05/04",,,,"EVENT",,23762
 ,"Julee","Wyld",," ",,"604-771-5682","jwyld@yahoo.com","107-1744 Barclay St"," ","Vancouver","BC","V6G 1K3","CAN","TRUE",,,,,,,"P","08/05/04",,,,"EVENT",,23763
 ,"Carmelita","Chan",," ",,"604-738-8860"," ","#1110-819 Hamilton St"," ","Vancouver","BC","V6B 6M2","CAN","TRUE",,,,,,,"P","08/05/04",,,,"EVENT",,23764
 ,"Desiree","Hauswald",," ",," "," ","1417 Doran Rd"," ","North Vancouver","BC","V7K 1N1","CAN","TRUE",,,,,,,"P","08/05/04",,,,"EVENT",,23765
