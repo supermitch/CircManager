@@ -1,6 +1,8 @@
 from django.db import models
 from django.forms import ModelForm
 
+from django.contrib.auth.models import User
+
 # Create your models here.
 class Customer(models.Model):
 
@@ -12,6 +14,8 @@ class Customer(models.Model):
         ('Prof.',   'Prof.'),
         ('Sir',     'Sir'),        
     )
+    
+    user = models.OneToOneField(User)
 
     # Customer personal details
     greeting = models.CharField('Greeting',
@@ -19,8 +23,11 @@ class Customer(models.Model):
                                 choices=GREETINGS,
                                 blank=True)
 
-    first_name = models.CharField('First Name', max_length=50)
-    last_name = models.CharField('Last Name', max_length=50)
+    # These currently exist in Django "user" module
+    #first_name = models.CharField('First Name', max_length=50)
+    #last_name = models.CharField('Last Name', max_length=50)
+    #email = models.EmailField(blank=True)
+    
     other_name = models.CharField('Other Names', max_length=100,blank=True)
     company = models.CharField('Company', max_length=100, blank=True)
     birthday = models.DateField('Birthday', blank=True, null=True)
@@ -33,7 +40,6 @@ class Customer(models.Model):
     #phone = models.CharField(max_length = 20, unique =False, blank=True, validators=[RegexValidator(regex=phone_regex)] ) 
 
     phone = models.CharField('Phone number', max_length=50, blank=True)
-    email = models.EmailField(blank=True)
 
     # Billing information
     bill_add_1 = models.CharField(max_length=200, blank=True)
@@ -55,7 +61,7 @@ class Customer(models.Model):
     # TODO: Django-countries: http://code.google.com/p/django-countries/
         
     def __unicode__(self):
-        return u'%s, %s' % (self.last_name, self.first_name) # Note 'u' prefix makes unicode string
+        return u'%s, %s' % (self.user, self.other_name) # Note 'u' prefix makes unicode string
 
 class CustomerForm(ModelForm):
     class Meta:

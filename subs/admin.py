@@ -5,11 +5,11 @@ class CustomerAdmin(admin.ModelAdmin):
 
     # fieldset docs: https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets
 
-    list_display = ('last_name', 'first_name')  # defines what appears on Customers admin page (list of entries)
+    list_display = ('user', 'other_name')  # defines what appears on Customers admin page (list of entries)
 
     fieldsets = (   # Defines presentation of data in groups during Customer record editing
         ('Personal information', {
-            'fields': (('greeting', 'first_name', 'last_name', 'other_name'), 'company','email', 'phone', 'birthday')
+            'fields': (('greeting', 'user', 'other_name'), 'company', 'phone', 'birthday')
         }),
         
         ('Billing information', {
