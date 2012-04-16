@@ -96,9 +96,13 @@ def handle_uploaded_file(f):
             user.is_active=False
             user.save()
 
-            try:
+            try:    # YYYY-mm-dd format
                 bd = dt.strptime(row[5], '%Y-%m-%d')
-            except:
+            except ValueError:
+                pass
+            try:    # dd/mm/yy format
+                bd = dt.strptime(row[5], '%m/%d/%y')
+            except ValueError:
                 bd = None
 
             c = Customer(
