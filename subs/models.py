@@ -23,11 +23,6 @@ class Customer(models.Model):
                                 choices=GREETINGS,
                                 blank=True)
 
-    # These currently exist in Django "user" module
-    #first_name = models.CharField('First Name', max_length=50)
-    #last_name = models.CharField('Last Name', max_length=50)
-    #email = models.EmailField(blank=True)
-    
     other_name = models.CharField('Other Names', max_length=100,blank=True)
     company = models.CharField('Company', max_length=100, blank=True)
     birthday = models.DateField('Birthday', blank=True, null=True)
@@ -51,7 +46,8 @@ class Customer(models.Model):
     # TODO: Django-countries: http://code.google.com/p/django-countries/
 
     # Shipping information:
-    ship_as_bill = models.BooleanField(verbose_name="Ship to Billing?")  #If true ignore shipping
+    # if True ignore shipping
+    ship_as_bill = models.BooleanField(verbose_name="Ship to Billing?")
     ship_add_1 = models.CharField(max_length=200, blank=True)
     ship_add_2 = models.CharField(max_length=200, blank=True)
     ship_city = models.CharField(max_length=200, blank=True)
@@ -61,7 +57,7 @@ class Customer(models.Model):
     # TODO: Django-countries: http://code.google.com/p/django-countries/
         
     def __unicode__(self):
-        return u'%s, %s' % (self.user, self.other_name) # Note 'u' prefix makes unicode string
+        return u'%s, %s' % (self.user, self.other_name) # Note 'u' prefix
 
 class CustomerForm(ModelForm):
     class Meta:
@@ -69,11 +65,9 @@ class CustomerForm(ModelForm):
     
 
 class Subscription(models.Model):
-    """
-    Subscription defines the purchase of the product, which has
+    """Subscription defines the purchase of the product, which has
     an associated duration, for products with more than 1 term.
-    For example, a 12 issue magazine subscription.
-    """
+    For example, a 12 issue magazine subscription."""
 
     payee_key = models.ForeignKey('subs.Customer',
                                   verbose_name='Payee',
