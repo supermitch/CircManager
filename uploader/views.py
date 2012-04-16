@@ -73,6 +73,7 @@ def handle_uploaded_file(f):
 
             user_name = re.sub(r'\W+', '', row[1].lower())
 
+            # We'd like usernames longer than 5 chars:
             if len(user_name) < 5:  # First attempt, add last name
                 user_name += re.sub(r'\W+', '', row[2].lower())
             if len(user_name) < 5:  # Second attempt, add 3 digit rand int

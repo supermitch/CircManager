@@ -1,27 +1,59 @@
 from subs.models import Customer, Subscription, Payment
 from django.contrib import admin
+from django.contrib.auth.models import User
 
 class CustomerAdmin(admin.ModelAdmin):
 
-    # fieldset docs: https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets
+    def user_first_name(self, instance):
+        return instance.user.first_name
 
-    list_display = ('user', 'other_name')  # defines what appears on Customers admin page (list of entries)
+    def user_last_name(self, instance):
+        return instance.user.last_name
 
-    fieldsets = (   # Defines presentation of data in groups during Customer record editing
+    def user_email(self, instance):
+        return instance.user.email
+
+    # defines what appears on Customers admin page (list of entries)
+    list_display = ('user', 'user_first_name', 'user_last_name') 
+
+    # get user fields to display in Customer admin form, below.
+    # (list_display) values won't work
+    readonly_fields = ('user_first_name', 'user_last_name', 'user_email')
+
+    fieldsets = (
         ('Personal information', {
-            'fields': (('greeting', 'user', 'other_name'), 'company', 'phone', 'birthday')
+            'fields': (('greeting',
+                        'user_first_name',
+                        'other_name',
+                        'user_last_name'),
+                        'company',
+                        'user_email',
+                        'phone',
+                        'birthday')
         }),
         
         ('Billing information', {
             # 'classes': ('collapse',),
-            'fields': ('bill_add_1', 'bill_add_2', 'bill_city', 'bill_province', 'bill_postal', 'bill_country')
+            'fields': ('bill_add_1',
+                       'bill_add_2',
+                       'bill_city',
+                       'bill_province',
+                       'bill_postal',
+                       'bill_country')
         }),
+
         (None, {
             'fields': ['ship_as_bill']
         }),
+
         ('Shipping information', {
-            'classes': ('collapse',),   # Class defines CSS applied to this fieldset. 'collapse' hides it.
-            'fields': ('ship_add_1', 'ship_add_2', 'ship_city', 'ship_province', 'ship_postal', 'ship_country')
+            'classes': ('collapse',),   # CSS: 'collapse' hides it.
+            'fields': ('ship_add_1',
+                       'ship_add_2',
+                       'ship_city',
+                       'ship_province',
+                       'ship_postal',
+                       'ship_country')
         }),
     )
     
