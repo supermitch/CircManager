@@ -143,3 +143,25 @@ class Payment(models.Model):
         return u'%s - %s for $%.2f' % (self.subscription, self.method, self.amount)
 
 
+class Shipment(models.Model):
+    """Stores shipment information so that admin can 'undo' a shipment.
+    Affected_list allows us to go back and find which subscriptions we
+    subtracted from."""
+
+    shipper = models.ForeignKey(User,
+                                related_name='shipment_author')
+
+    ship_date = models.DateTimeField(auto_now_add=True)
+    
+    product_key = models.ForeignKey('products.Product',
+                                    verbose_name='Product',
+                                    related_name='shipment_product')
+
+    affected_list = models.TextField(verbose_name='Customers')
+
+    # Including this in __unicode__(self) causes server to crash...
+    def get_length(self):
+        return self.affected_list
+
+    def __unicode__(self):
+        return u'%s [ %s ]' % (self.product_key, self.ship_date)

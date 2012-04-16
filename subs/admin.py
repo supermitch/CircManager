@@ -1,4 +1,4 @@
-from subs.models import Customer, Subscription, Payment
+from subs.models import Customer, Subscription, Payment, Shipment
 from django.contrib import admin
 from django.contrib.auth.models import User
 
@@ -69,7 +69,11 @@ class SubscriptionAdmin(admin.ModelAdmin):
 class PaymentAdmin(admin.ModelAdmin):
     pass
 
+class ShipmentAdmin(admin.ModelAdmin):
+    pass
+
 # TODO: Check to see if there's a better way
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Subscription, SubscriptionAdmin) 
 admin.site.register(Payment, PaymentAdmin)
+admin.site.register(Shipment, ShipmentAdmin)
