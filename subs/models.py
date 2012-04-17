@@ -57,7 +57,7 @@ class Customer(models.Model):
     # TODO: Django-countries: http://code.google.com/p/django-countries/
         
     def __unicode__(self):
-        return u'%s, %s' % (self.user, self.other_name) # Note 'u' prefix
+        return u'%s' % (self.user) # Note 'u' prefix
 
 class CustomerForm(ModelForm):
     class Meta:
@@ -150,18 +150,17 @@ class Shipment(models.Model):
 
     shipper = models.ForeignKey(User,
                                 related_name='shipment_author')
-
-    ship_date = models.DateTimeField(auto_now_add=True)
-    
-    product_key = models.ForeignKey('products.Product',
+    date = models.DateTimeField(auto_now_add=True)
+    product = models.ForeignKey('products.Product',
                                     verbose_name='Product',
                                     related_name='shipment_product')
-
-    affected_list = models.TextField(verbose_name='Customers')
+    notes = models.CharField(max_length = 200,
+                             verbose_name='Shipment notes')
+    receivers = models.TextField(verbose_name='Receivers')
 
     # Including this in __unicode__(self) causes server to crash...
     def get_length(self):
         return self.affected_list
 
     def __unicode__(self):
-        return u'%s [ %s ]' % (self.product_key, self.ship_date)
+        return u'%s [ %s ]' % (self.product, self.date)
