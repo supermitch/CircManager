@@ -4,7 +4,7 @@ from django.template import RequestContext
 # Enable field lookups in queries
 from django.db.models import F
 
-from CircManager.subs.forms import SendIssueForm
+from subs.forms import SendProductForm, PullProductForm
 from subs.models import Subscription, Shipment
 from products.models import Product
 
@@ -14,11 +14,28 @@ import json # for saving shipment history
 def index(request):
     return render_to_response('subs/index.html',)
 
+def pull_product(request):
+
+    if request.method == 'POST':
+        form = PullProductForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            rec_count = 'successful pull'
+            return render_to_response('subs/pulled.html',{
+                                    'rec_count': rec_count
+                                    })
+    else:
+        form = PullProductForm()
+
+    return render_to_response('subs/pull_product.html',
+                              {'form': form},
+                              context_instance=RequestContext(request))
+    
 
 def ship_product(request):
 
     if request.method == 'POST':
-        form = SendIssueForm(request.POST)
+        form = SendProductForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
 
@@ -51,12 +68,11 @@ def ship_product(request):
                                     'rec_count': rec_count
                                     })
     else:
-        form = SendIssueForm()
+        form = SendProductForm()
 
     return render_to_response('subs/ship_product.html',
                               {'form': form},
                               context_instance=RequestContext(request))
-
 
 def ship_success(request):
     return render_to_response('subs/shipped.html')
