@@ -16,9 +16,9 @@ class SendProductForm(forms.Form):
                             required=False)
 
 class PullProductForm(forms.Form):
-
-    ship_choices = [(ship.id, ship) for ship in Shipment.objects.all()]
-
-    shipment = forms.CharField(initial='Choose a shipment to recall',
-                               max_length=10,
-                               widget=forms.Select(choices=ship_choices))
+    # Make use of dynamic "ModelChoiceField" or choices aren't updated
+    shipment = forms.ModelChoiceField(
+                    help_text='Choose a shipment to recall',
+                    required=False,
+                    queryset= Shipment.objects.all(),
+                    widget=forms.Select)

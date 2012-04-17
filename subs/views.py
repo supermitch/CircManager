@@ -20,7 +20,21 @@ def pull_product(request):
         form = PullProductForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            rec_count = 'successful pull'
+
+            try:
+                recs = json.loads(cd['shipment'].receivers)
+            except ValueError:
+                recs = []
+
+            for (key, term) in recs:
+                sub = Subscription.objects.get(pk = key)
+                sub.term_length += 1
+                sub.save()
+            
+            rec_count = len(recs)
+
+            cd['shipment'].delete()  # Delete this shipment!
+
             return render_to_response('subs/pulled.html',{
                                     'rec_count': rec_count
                                     })
