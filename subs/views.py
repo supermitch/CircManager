@@ -38,8 +38,6 @@ def ship_product(request):
             rec_terms = [r.term_length for r in u]
             json_recs = json.dumps(zip(rec_id, rec_terms))
 
-            print("JSON dumps: " + json_recs)
-
             shipped = Shipment(shipper = request.user,
                                date = dt.now(),
                                product = product,

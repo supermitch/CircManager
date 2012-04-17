@@ -158,9 +158,10 @@ class Shipment(models.Model):
                              verbose_name='Shipment notes')
     receivers = models.TextField(verbose_name='Receivers')
 
-    # Including this in __unicode__(self) causes server to crash...
-    def get_length(self):
-        return self.affected_list
-
     def __unicode__(self):
-        return u'%s [ %s ]' % (self.product, self.date)
+        if len(self.notes) > 50:
+            short_notes = self.notes[:50] + '...'
+        else:
+            short_notes = self.notes
+
+        return u'%s:   "%s"   [ %s ]' % (self.product, short_notes, self.date)
