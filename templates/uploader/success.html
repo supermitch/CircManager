@@ -1,13 +1,14 @@
-<html>
+{% extends "admin/base_site.html" %}
 
-<head>
-    <title>Uploader: success</title>
-</head>
+{% block title %}CircManager: CSV Upload{% endblock %}
 
-<body>
+{% block content %}
 
-    <p><strong>Success!</strong> File uploaded. Now what?</p>
+    <h1>Upload was successful!</h1>
 
-</body>
+    <p>Records uploaded successfully.</p>
 
-</html>
+    <p><a href="{% url admin:index %}">Back to Admin</a> |
+       <a href="{% url upload.views.upload %}">Upload another file</a></p>
+
+{% endblock %}
