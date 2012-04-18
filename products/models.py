@@ -31,4 +31,4 @@ class SaleItem(models.Model):
 
     code = models.CharField(max_length=50)
     def __unicode__(self):
-        return u'%s: %s - $%s' % (self.code, self.product, self,cost)
+        return u'%s: %s - $%s' % (self.code, self.product, self.cost)

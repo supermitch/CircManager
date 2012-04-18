@@ -72,31 +72,14 @@ class Subscription(models.Model):
     payee_key = models.ForeignKey('subs.Customer',
                                   verbose_name='Payee',
                                   related_name='subs_payee')
-
-    promo_key = models.ForeignKey('products.Promo',
-                                  verbose_name='Promo',
-                                  related_name='subs_promo',
-                                  blank=True, null=True)
     
     product_key = models.ForeignKey('products.Product',
                                     verbose_name='Product',
                                     related_name='subs_product')
 
-    term_length = models.IntegerField() # eg. "2" (issues)
-
-    TERM_UNITS = (
-        ('Days',    'Days'),
-        ('Weeks',   'Weeks'),
-        ('Months',  'Months'),
-        ('Years',   'Years'),
-        ('Issues',  'Issues'),
-    )
-
-    term_units = models.CharField('Term units',
-                                  max_length=6,
-                                  choices=TERM_UNITS,
-                                  default='Issues')
-
+    first_issue = models.IntegerField() # inclusive
+    last_issue = models.IntegerField() # inclusive
+    
     STATUSES = (
         ('Inactive',    'Inactive'),
         ('Active',      'Active'),
@@ -113,10 +96,10 @@ class Subscription(models.Model):
     gift_msg = models.CharField('Git message', max_length=250,blank=True)
  
     def __unicode__(self):
-        return u'%s - %s: %s %s' % (self.payee_key,
+        return u'%s - %s: %s:%s' % (self.payee_key,
                                     self.product_key,
-                                    self.term_length,
-                                    self.term_units)
+                                    self.first_issue,
+                                    self.last_issue)
 
 
 class Payment(models.Model):
@@ -135,33 +118,15 @@ class Payment(models.Model):
                               max_length=7,
                               choices=PAYMENT_METHODS)
 
+    promo_key = models.ForeignKey('products.Promo',
+                                  verbose_name='Promo',
+                                  related_name='subs_promo',
+                                  blank=True, null=True)
     amount = models.DecimalField('Total',
                                  max_digits=9,
                                  decimal_places=2)   # Max 9,999,999.99
 
     def __unicode__(self):
-        return u'%s - %s for $%.2f' % (self.subscription, self.method, self.amount)
-
-
-class Shipment(models.Model):
-    """Stores shipment information so that admin can 'undo' a shipment.
-    Affected_list allows us to go back and find which subscriptions we
-    subtracted from."""
-
-    shipper = models.ForeignKey(User,
-                                related_name='shipment_author')
-    date = models.DateTimeField(auto_now_add=True)
-    product = models.ForeignKey('products.Product',
-                                    verbose_name='Product',
-                                    related_name='shipment_product')
-    notes = models.CharField(max_length = 200,
-                             verbose_name='Shipment notes')
-    receivers = models.TextField(verbose_name='Receivers')
-
-    def __unicode__(self):
-        if len(self.notes) > 50:
-            short_notes = self.notes[:50] + '...'
-        else:
-            short_notes = self.notes
-
-        return u'%s:   "%s"   [ %s ]' % (self.product, short_notes, self.date)
+        return u'%s - %s for $%.2f' % (self.subscription,
+                                       self.method,
+                                       self.amount)
