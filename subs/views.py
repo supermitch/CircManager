@@ -4,7 +4,7 @@ from django.template import RequestContext
 # Enable field lookups in queries
 from django.db.models import F
 
-from subs.forms import SendProductForm, PullProductForm
+from subs.forms import ShipProductForm, PullProductForm
 from subs.models import Subscription, Shipment
 from products.models import Product
 
@@ -14,6 +14,22 @@ import json # for saving shipment history
 def index(request):
     return render_to_response('subs/index.html',)
 
+def shipping(request):
+
+    if request.method == 'POST':
+        pass
+
+    else:
+        ship_form = ShipProductForm(prefix='ship')
+        pull_form = PullProductForm(prefix='pull')
+        
+
+    return render_to_response('subs/shipping.html',
+                              {'ship_form': ship_form,
+                               'pull_form': pull_form},
+                              context_instance=RequestContext(request))
+    
+        
 def pull_product(request):
 
     if request.method == 'POST':
@@ -49,7 +65,7 @@ def pull_product(request):
 def ship_product(request):
 
     if request.method == 'POST':
-        form = SendProductForm(request.POST)
+        form = ShipProductForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
 
@@ -82,7 +98,7 @@ def ship_product(request):
                                     'rec_count': rec_count
                                     })
     else:
-        form = SendProductForm()
+        form = ShipProductForm()
 
     return render_to_response('subs/ship_product.html',
                               {'form': form},

@@ -3,7 +3,7 @@ from django import forms
 from products.models import Product
 from subs.models import Shipment
 
-class SendProductForm(forms.Form):
+class ShipProductForm(forms.Form):
 
     prod_choices = [(prod.id, prod.code) for prod in Product.objects.all()]
 

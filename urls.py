@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', logout),
     
     # Custom views
+    url(r'^subs/shipping/', 'subs.views.shipping', name='shipping'),
     url(r'^subs/ship/', 'subs.views.ship_product', name='shipper'),
     url(r'^subs/pull/', 'subs.views.pull_product', name='puller'),
     url(r'^subs/', 'subs.views.index'),   
