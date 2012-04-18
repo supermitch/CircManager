@@ -17,8 +17,64 @@ def index(request):
 def shipping(request):
 
     if request.method == 'POST':
-        pass
+        ship_form = ShipProductForm(request.POST, prefix='ship')
+        pull_form = PullProductForm(request.POST, prefix='pull')
 
+        if ship_form.is_valid():
+            print("shipping form running")
+
+            cd = ship_form.cleaned_data
+
+            q = Subscription.objects.filter(
+                product_key__exact=cd['product'])
+            q = q.filter(status__iexact='Active')
+            q = q.filter(term_length__gt=0)
+
+            u = list(q) # save current records before updating
+
+            # Presently no option for more than 1 issue shipped
+            rec_count = q.update(term_length=F('term_length') - 1)
+
+            product = Product.objects.get(pk = cd['product'])
+
+            rec_id = [r.id for r in u]
+            rec_terms = [r.term_length for r in u]
+            json_recs = json.dumps(zip(rec_id, rec_terms))
+
+            shipped = Shipment(shipper = request.user,
+                               date = dt.now(),
+                               product = product,
+                               notes = cd['notes'],
+                               receivers = json_recs)
+            shipped.save()
+
+            return render_to_response('subs/shipped.html',{
+                                    'q': q,
+                                    'u': u,
+                                    'rec_count': rec_count
+                                    })
+
+        if pull_form.is_valid():
+            cd = pull_form.cleaned_data
+            print("Pulling form running")
+
+            try:
+                recs = json.loads(cd['shipment'].receivers)
+            except ValueError:
+                recs = []
+
+            for (key, term) in recs:
+                sub = Subscription.objects.get(pk = key)
+                sub.term_length += 1
+                sub.save()
+            
+            rec_count = len(recs)
+
+            cd['shipment'].delete()  # Delete this shipment!
+
+            return render_to_response('subs/pulled.html',{
+                                    'rec_count': rec_count
+                                    })
     else:
         ship_form = ShipProductForm(prefix='ship')
         pull_form = PullProductForm(prefix='pull')
