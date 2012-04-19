@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from models import UploadFileForm # import our upload form model
 
 from subs.models import Customer
+import os
 
 
 def success(request):
@@ -54,8 +55,8 @@ def handle_uploaded_file(f):
 
     with open(infile, "rb") as csvFile:
 
-        csvSample = csvFile.read(1024)     # Read sample of file for csv sniffers
-        csvFile.seek(0)                    # rewind the file
+        csvSample = csvFile.read(1024)     # Read sample for csv sniffer
+        csvFile.seek(0)
         dialect = csv.Sniffer().sniff(csvSample)
         inReader = csv.reader(csvFile, dialect)     # Read our .csv file
 
@@ -118,22 +119,25 @@ def handle_uploaded_file(f):
 
                 # Billing address:
                 , bill_add_1=row[8], bill_add_2=row[9], bill_city=row[10]
-                , bill_province=row[11], bill_postal=row[12], bill_country=row[13]
+                , bill_province=row[11]
+                , bill_postal=row[12]
+                , bill_country=row[13]
                 
                 # Shipping address:
                 , ship_as_bill=row[14]
-                , ship_add_1=row[15], ship_add_2=row[16], ship_city=row[17]
-                , ship_province=row[18], ship_postal=row[19], ship_country=row[20]
+                , ship_add_1=row[15]
+                , ship_add_2=row[16]
+                , ship_city=row[17]
+                , ship_province=row[18]
+                , ship_postal=row[19]
+                , ship_country=row[20]
                 )
             c.save()
 
             # look for a product column
-            # if there's none, check to see if we have a product defined in our DB
+            # if none, check to see if we have a product defined in our DB
             # if not, define default product "MAGAZINE"
 
-            # either use default product, or use column product value
-
-            # 
             #term_length = calculate_term(date)
             #p = Product(pk=1)
             #if not p:
@@ -141,6 +145,10 @@ def handle_uploaded_file(f):
             #    p.save()
             #s = Subscription(payee_key=c, product_key=p, term_length)
 
+    try:
+        os.remove(infile) # Clean up temp file
+    except:
+        pass    # Don't really care if delete fails
 
     # return {'name_list': ['mitch', 'ross', 'test']} # holy shit this worked.
     return True
