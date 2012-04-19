@@ -69,7 +69,7 @@ class Subscription(models.Model):
     an associated duration, for products with more than 1 term.
     For example, a 12 issue magazine subscription."""
 
-    payee_key = models.ForeignKey('subs.Customer',
+    payee_key = models.ForeignKey(User,
                                   verbose_name='Payee',
                                   related_name='subs_payee')
     
