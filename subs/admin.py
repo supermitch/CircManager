@@ -64,9 +64,14 @@ class CustomerAdmin(admin.ModelAdmin):
     #date_hierarchy = 'pub_date'
 
 class SubscriptionAdmin(admin.ModelAdmin):
-    pass
+
+    list_display = ('payee_key', 'product_key', 'first_issue', 'last_issue',
+                    'status', 'gift_bool') 
+
+    list_filter = ('product_key__name', 'status', 'gift_bool')
 
 class PaymentAdmin(admin.ModelAdmin):
+    
     pass
 
 # TODO: Check to see if there's a better way

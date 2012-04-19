@@ -2,7 +2,7 @@ from django.db import models
 
 class Product(models.Model):
 
-    name = models.CharField(max_length=200)
+    name = models.CharField('Product name', max_length=200)
     issue_no = models.IntegerField(help_text='Current issue number')
     description = models.TextField()
 
@@ -11,7 +11,7 @@ class Product(models.Model):
 
 class Promo(models.Model):
 
-    name = models.CharField(max_length=200)
+    name = models.CharField('Promo name', max_length=200)
     dateCreated = models.DateField('Created', blank=True, null=True)
     # TODO: Limit discount to max 100
     discount = models.PositiveIntegerField(

@@ -87,7 +87,7 @@ class Subscription(models.Model):
         ('Hold',        'Hold'),
     )
 
-    status = models.CharField(max_length=8,
+    status = models.CharField('Status', max_length=8,
                               choices=STATUSES,
                               default='Active')
 
