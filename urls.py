@@ -25,7 +25,9 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', logout),
     
     url(r'^subs/subscribe/', 'subs.views.subscribe', name='subscribe'),
-
+    
+    url(r'^reports/upcoming/', 'reports.views.upcoming'),
+    
     url(r'^upload/upload/', 'uploader.views.upload_file', name='upload'),
     url(r'^upload/success/', 'uploader.views.success', name='success'),
 

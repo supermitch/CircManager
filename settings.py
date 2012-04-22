@@ -123,10 +123,11 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'index',    # Home page app
+    'index',
     'subs',
-    'uploader', # Nov. 20 added uploader
-    'products', # RM - Nov. 28 added 
+    'uploader',
+    'products',
+    'reports',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
