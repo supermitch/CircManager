@@ -24,7 +24,7 @@ def upload_file(request):
             # return a response from this page
             # name_list = handle_uploaded_file(request.FILES['file'])
             if handle_uploaded_file(request.FILES['file']):
-                return HttpResponseRedirect('../success')
+                return HttpResponseRedirect('/upload/success/')
                 # return render_to_response('uploader/results.html',
                 #   name_list, 
                 #   context_instance=RequestContext(request))
