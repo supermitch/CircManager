@@ -8,6 +8,24 @@
 
     <h1>Upcoming subscription expiries</h1>
 
+    
+        <p>To view details, choose a specific product:</p>
+
+        {% if form.errors %}
+            <p style="color: red;">
+                Please correct the error{{ form.errors|pluralize }} below.
+            </p>
+        {% endif %}
+
+        <form action="" method="GET">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit" value="View expiries">
+        </form>
+
+
     {% if success %}
         <p><strong>Success!</strong> Subscription added.</p>
 
